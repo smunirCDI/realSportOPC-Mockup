@@ -1,0 +1,1417 @@
+
+<!doctype html>
+<html lang="en" class="en_US logged-out">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>Real Sports Auction</title>
+        <meta name="title" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta property="og:title" content="Real Sports Auction | Game-Used Merchandise" />
+        <meta property="og:image" content="https://vafloc01.s3.amazonaws.com/WBStatic/site1103961/dist/img/realsports_auction_logo.jpg" />
+        <meta property="og:description" content="Online store for authentic game-used merchandise for your Maple Leafs, Raptors, Toronto FC, Argonauts, and Toronto Marlies" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://auctions.realsports.ca/iSynApp/productDisplay.action?sid=1103961&productId=&selectedCatId=-1" />
+        
+        <link rel="canonical" href="https://auctions.realsports.ca/iSynApp/productDisplay.action?sid=1103961&productId=&selectedCatId=-1">
+
+        <link rel="icon" type="image/png" href="https://vafloc01.s3.amazonaws.com/WBStatic/site1103961/dist/img/favicon.png" />
+
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Oswald:wght@300;400;500;700&display=swap">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="https://vafloc01.s3.amazonaws.com/WBStatic/site1103961/dist/css/owl.min.css">
+
+        <link rel="stylesheet" type="text/css" href="https://vafloc01.s3.amazonaws.com/WBStatic/site1103961/dist/css/style.css">
+        <link rel="stylesheet" type="text/css" href="https://vafloc01.s3.amazonaws.com/WBStatic/site1103961/dist/css/realsports.min.css">
+        <link rel="stylesheet" type="text/css" href="https://opencanvas.io/search.css">
+
+        <link rel="stylesheet" type="text/css" href="https://opencanvas.io/dist/mlse/styles.css">
+        <link rel="stylesheet" href="./styles1.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
+
+        <script type="text/javascript" charset="utf-8">
+
+            // Big assumption, JavaScript engine for the browser needs to be single threaded
+            var jsCallId = 0;
+            var jsCallIdName = "jsCallId";
+            var jsCallBackFunctionMap = {};
+            var jsSessionCookieName = "isynsession";
+
+            // Get next call id
+            var jsGetNextCallId = function() {
+                jsCallId = jsCallId + 1;
+                return jsCallId;
+            }
+
+            // Get a unique call back handler for the call id and then remove if from the function map
+            var jsGetCallBackFunction = function(callId) {
+                var callBackRef = jsCallIdName + callId;
+                var foundCallBack = jsCallBackFunctionMap[callBackRef];
+                delete jsCallBackFunctionMap[callBackRef];
+                return foundCallBack;
+            }
+
+            // Set a unique call back handler for the call id
+            var jsSetCallBackFunction = function(callId, callBackFunction) {
+                if (typeof callBackFunction=="undefined") {
+                    return;
+                }
+                var callBackRef = jsCallIdName + callId;
+                jsCallBackFunctionMap[callBackRef] = callBackFunction;
+            }
+
+            // Populate a session cookie if available
+            var jsGetLoginSessionValue = function() {
+                jsSessionCookieValue = jQuery.cookie(jsSessionCookieName);
+                if (typeof jsSessionCookieValue!="undefined") {
+                    return jsSessionCookieValue;
+                }
+                else {
+                    return "";
+                }
+            }
+
+            // Set a session cookie if available using the json data received from the call
+            var jsProcessLoginResponse = function(jsData) {
+                if (jsData.jsStatus == "success") {
+                    jQuery.cookie(jsSessionCookieName, jsData.jsSessionValue, { path: '/' });
+                }
+            }
+
+            // Merge two parameter maps
+            var jsMergeParams = function(toMap, fromMap){
+                // copy params from fromMap to toMap
+                for (fromMapName in fromMap) {
+                toMap[fromMapName] = fromMap[fromMapName];
+                }
+                return toMap;
+            }
+
+            // Prepare a fresh parameter map for a server call
+            var jsSubmitParams = function(currentCallId){
+                // get an associative array of just the values.
+                var values = {};
+                values[jsCallIdName] = currentCallId;
+                values[jsSessionCookieName] = jsGetLoginSessionValue();
+                return values;
+            }
+
+            // Prepare a parameter map for a server call using a form id from the DOM
+            var jsSubmitFormInputs = function(jqFormId, currentCallId){
+                // get all the inputs into an array.
+                var inputs = jQuery(jqFormId).serializeArray();
+
+                // get an associative array of just the values.
+                var values = jsSubmitParams(currentCallId);
+                jQuery.each(inputs, function(i, input){
+                    values[input.name] = jQuery(input).val();
+                });
+                return values;
+            }
+
+            // Submit a get request and register a call back handler for the response from the call
+            var jsSubmitGetRequestForCallId = function(callId, formAction, formParamsMap, formCallBack) {
+                // store the call back function
+                jsSetCallBackFunction(callId, formCallBack);
+                jQuery.getJSON(formAction+"?jsCallBack=?", formParamsMap, function(jsData) {
+                    if (typeof jsData.jsCallId!="undefined") {
+                        // get the call back function
+                        callBackFunction = jsGetCallBackFunction(jsData.jsCallId);
+                        if (typeof callBackFunction!="undefined") {
+                            callBackFunction(jsData);
+                        }
+                    }
+                });
+            }
+
+            // Use a form id from the DOM to locate the form action and parameters to submit a form silently
+            var jsSubmitForm = function(formId, formCallBack) {
+                var jqFormId = "#" + formId;
+                var currentCallId = jsGetNextCallId();
+
+                // prepare the call param map
+                var formInputMap = jsSubmitFormInputs(jqFormId, currentCallId);
+
+                // prepare call action
+                var formInputAction = jQuery(jqFormId).attr("action");
+
+                // make the call
+                jsSubmitGetRequestForCallId(currentCallId, formInputAction, formInputMap, formCallBack);
+                return false;
+            }
+
+            // Submit a get request using a request url and parameter map
+            var jsSubmitGetRequestForUrl = function(requestUrl, requestParamsMap, requestCallBack) {
+
+                // setup call id
+                var currentCallId = jsGetNextCallId();
+
+                // prepare the call param map
+                var requestInputMap = jsSubmitParams(currentCallId);
+
+                // merge the parameters
+                jsMergeParams(requestInputMap, requestParamsMap);
+
+                // make the call
+                jsSubmitGetRequestForCallId(currentCallId, requestUrl, requestInputMap, requestCallBack);
+            }
+
+            // Reload auction updates from the registered auction reference list for the registered domain
+            var jsAuctionRefList = "";
+
+            var jsEnquiryName = "enquiryList";
+            var jsEnquiryId = "aucId";
+            var jsEnquiryRef = "aucRef";
+            var jsEnquiryBidHist = "aucBidHist";
+            var jsAuctionUpdateUri = "/iSynApp/viewAuction!listUpdates.action";
+            var jsReferenceTimeUri = "/iSynApp/viewAuction!referenceTime.action";
+
+            var jsAuctionUpdateHost = "";
+            var jsAuctionUpdateMillis = 0;
+            var jsAuctionRefereshCount = 0;
+            var jsAuctionRefereshIdx = 0;
+            var jsAuctionTriggerMillis = 0;
+            var jsTimerMillis = 1000;
+
+            var jsReferenceTimerMillis = 20000;
+            var jsReferenceTriggerMillis = 0;
+
+            var jsOffetMillis = 0;
+
+            var jsAucEndTimeMillisGMT = {};
+            var jsAucFinalStatus = {};
+            var jsAucRefMax = 0;
+
+            var jsTimerTick = function() {
+
+                // check if auction update is required
+                jsAuctionTriggerMillis = jsAuctionTriggerMillis + jsTimerMillis;
+                if (jsAuctionTriggerMillis > jsAuctionUpdateMillis) {
+                    jsAuctionTriggerMillis = 0;
+                    jsReloadAuctionUpdates();
+                }
+
+                // do reference time check
+                jsReferenceTriggerMillis = jsReferenceTriggerMillis + jsTimerMillis;
+                if (jsReferenceTriggerMillis > jsReferenceTimerMillis) {
+                    jsReferenceTriggerMillis = 0;
+                    jsReferenceTimeUpdates();
+                }
+
+                // show timer tick
+                if (jsAucRefMax > 0) {
+                    var localCurrentMillis = new Date().getTime();
+                    for (var jsAucRefIdx = 1; jsAucRefIdx <= jsAucRefMax; jsAucRefIdx++) {
+                        var jqAucClosingMillisRef = "#Item" + jsAucRefIdx + "ClosingSec";
+                        var jqAucFinalStatusRef = "#Item" + jsAucRefIdx + "FinalStatus";
+                        var itemClosingMillis = jsAucEndTimeMillisGMT[jqAucClosingMillisRef];
+                        var itemFinalStatus = jsAucFinalStatus[jqAucFinalStatusRef];
+                        displayClosingSeconds = Math.floor((itemClosingMillis - localCurrentMillis - jsOffetMillis) / 1000);
+                        jsProcessAuctionTick(jqAucClosingMillisRef, displayClosingSeconds, itemFinalStatus);
+                    }
+                }
+
+                // check if another tick needs to be registered
+                if (jsAuctionRefereshIdx < jsAuctionRefereshCount) {
+                    // re-register a timeout tick
+                    jsAuctionRefereshIdx = jsAuctionRefereshIdx + 1;
+                    // console.log("jsAuctionRefereshIdx:" + jsAuctionRefereshIdx + "; jsTimerMillis:" + jsTimerMillis + ";");
+                    setTimeout(jsTimerTick, jsTimerMillis); // 1 second tick
+                }
+                else {
+                    // show that auto refresh is complete, need to reenable if required
+                    /*jQuery.magnificPopup.open({
+                        items: {
+                            src: '#livebid-note', // can be a HTML string, jQuery object, or CSS selector
+                            type: 'inline',
+                        },
+                        preloader: false,
+                        modal: true
+                    });*/
+
+                    jQuery('#livebid-note').modal({
+                        keyboard: false,
+                        backdrop: 'static'
+                    })
+
+                }
+            }
+
+            // Process auction updates using the json data received from the call
+            var jsProcessReferenceTime = function(jsData) {
+
+                if (jsData.jsStatus == "success") {
+                    if (typeof jsData.timeUpdate!="undefined") {
+                        jsOffetMillis = jsData.timeUpdate.timeOffsetMillis;
+                    }
+                }
+
+            }
+
+            // Register a request to reload auction updates
+            var jsReferenceTimeUpdates = function() {
+
+                // prepare param map
+                var requestParamsMap = {};
+                requestParamsMap["timeClientMillis"] = new Date().getTime();
+
+                // make the call to get the time
+                var fullReferenceTimeUrl = jsAuctionUpdateHost + jsReferenceTimeUri;
+                jsSubmitGetRequestForUrl(fullReferenceTimeUrl, requestParamsMap, jsProcessReferenceTime);
+
+            }
+
+            var jsProcessAuctionUpdates;
+            var jsProcessAuctionTick;
+
+            // Register a request to reload auction updates
+            var jsReloadAuctionUpdates = function() {
+
+                // check if references are populated
+                if (typeof jsAuctionRefList=="undefined" || jsAuctionRefList=="") {
+                    return;
+                }
+
+                // prepare param map
+                var requestParamsMap = {};
+                var pIdx = 0;
+
+                // prepare the reference array and iterate the DOM to load the values
+                var auctionRefArray = jsAuctionRefList.split(';');
+
+                jQuery.each(auctionRefArray, function(i, auctionRef){
+                    var jqAucIdName = "#" + auctionRef + "AucId";
+                    var jqAucIdValue = jQuery(jqAucIdName).val();
+
+                    var jqBidHistValue = vafBidHistCount;
+                    if (typeof jqAucIdValue!="undefined" && jqAucIdValue!="" && auctionRef!="") {
+                        var elName = jsEnquiryName + "[" + pIdx + "].";
+                        requestParamsMap[elName + jsEnquiryRef] = auctionRef;
+                        requestParamsMap[elName + jsEnquiryId] = jqAucIdValue;
+                        requestParamsMap[elName + jsEnquiryBidHist] = jqBidHistValue;
+                        // prepare pIdx for the next
+                        pIdx = pIdx + 1;
+                    }
+                });
+
+                // make the call to get the updates
+                var fullAuctionUpdateUrl = jsAuctionUpdateHost + jsAuctionUpdateUri;
+                jsSubmitGetRequestForUrl(fullAuctionUpdateUrl, requestParamsMap, jsProcessAuctionUpdates);
+
+            }
+
+            // Enable automatic auction updates
+            var jsEnableAuctionUpdates = function(auctionRefList, auctionUpdateHost, auctionUpdateMillis, auctionRefereshCount, processAuctionUpdates, processAuctionTick) {
+                jsAuctionRefList = auctionRefList;
+                jsAuctionUpdateHost = auctionUpdateHost;
+                jsAuctionUpdateMillis = auctionUpdateMillis;
+                jsAuctionRefereshCount = auctionRefereshCount;
+                jsAuctionRefereshIdx = 0;
+
+                if (jsAuctionUpdateMillis < 3000) {
+                    jsAuctionUpdateMillis = 3000;
+                }
+
+                if (jsAuctionRefereshCount > 900) {
+                    jsAuctionRefereshCount = 900;
+                }
+
+                jsProcessAuctionUpdates = processAuctionUpdates;
+                jsProcessAuctionTick = processAuctionTick;
+                jsReferenceTimeUpdates();
+                jsReloadAuctionUpdates();
+                jsTimerTick();
+            }
+
+            // Disable automatic auction updates
+            var jsDisableAuctionUpdates = function() {
+                jsProcessAuctionUpdates = 0;
+                jsProcessAuctionTick = 0;
+                jsAuctionRefereshCount = 0;
+                jsAuctionRefereshIdx = 0;
+            }
+
+        </script>
+        <script>
+
+        var pageProps = {};
+        window.pageName = "";
+
+        pageProps.pageName = "";
+
+
+
+        // Categories, facets, promo groups
+
+        var catsList = [];
+
+
+        pageProps.catsList = catsList;
+        pageProps.cats = catsList.join('/');
+
+        var facetsList = [];
+
+        pageProps.facetsList = facetsList;
+        pageProps.facets = facetsList.join('+');
+
+        var promoGroupsList = [];
+
+        pageProps.promoGroupsList = promoGroupsList;
+        pageProps.promoGroups = promoGroupsList.join('+');
+
+        // Special cases for productDisplay.vm
+        
+        pageProps.parameters = '2393126:PRO-STOCK-CCM-Tacks-710-White-Toronto-Maple-Leafs-NHL-Team-Issued-Hockey-Helmets';
+
+
+        messages = [];
+
+
+        pageProps.messages = messages;
+
+        </script>
+
+        <script>
+
+        window.dataLayer = window.dataLayer || [];
+
+        dataLayer.push ({
+        "venueType": "prod",
+        "lang": "en_US",
+        "pageName": pageProps.pageName,
+        "pageId": "productDisplay",
+        "section": "product",
+        "subsection": "",
+        "cats": pageProps.cats,
+        "facets": pageProps.facets,
+        "promoGroups": pageProps.promoGroups,
+        "parameters": pageProps.parameters,
+        "query": pageProps.query,
+        "messages": pageProps.messages,
+        });
+
+        // Impressions
+
+        // "id":"$auction.id",
+        // "name":"$auction.getTitle($selectedLang, 250)",
+        // "price":"$auction.currentBid",
+        // "brand":"Bvlgari",
+        // "category":"Men/Clothing/T-Shirts",
+        // "position":0,
+        // "variant":"Blue",
+        // "list":"Category page"
+
+
+        // ECommerce
+
+
+
+        </script>
+
+            <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-N8NFW6S');</script>
+        <!-- End Google Tag Manager -->
+
+
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-P9TP4JC');</script>
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P9TP4JC"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+
+
+    </head>
+    <script>
+        var vafBidHistCount = 0;
+        // Process auction updates using the json data received from the call
+        var jsDefaultProcessAuctionUpdates = function(jsData) {
+
+            if (jsData.jsStatus == "success") {
+                if (typeof jsData.auctionUpdateMap!="undefined") {
+
+                    var pIdx = 1;
+                    jQuery.each(jsData.auctionUpdateMap, function(i, auctionRef) {
+
+                        var jqBidAmtName = "#" + auctionRef.aucRef + "BidAmt";
+                        var jqBidCountName = "#" + auctionRef.aucRef + "BidCount";
+                        var jqAucVersionName = "#" + auctionRef.aucRef + "AucVersion";
+                        var jqAucClosingMillisRef = "#" + auctionRef.aucRef + "ClosingSec";
+                        var jqFinalStatusName = "#" + auctionRef.aucRef + "FinalStatus";
+                        jQuery(jqBidAmtName).html("$" +""+ auctionRef.currentBid.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
+                        jQuery(jqBidCountName).html(auctionRef.bidCount);
+                        jQuery(jqFinalStatusName).html(auctionRef.finalizeStatus);
+                        jsAucEndTimeMillisGMT[jqAucClosingMillisRef] = auctionRef.endTimeMillisGMT;
+                        jsAucFinalStatus[jqFinalStatusName] = auctionRef.finalizeStatus;
+                        pIdx = pIdx + 1;
+
+                    }); 
+                    jsAucRefMax = pIdx;
+                }
+            }
+        }
+        function padNum (num) {
+            if (num < 10) {
+                return "0" + num;
+            }
+            else {
+                return num;
+            }
+        }
+
+        function secondsToDaysHourMinSec(remSeconds) {
+            var days, hours, minutes, seconds;
+            seconds = remSeconds;
+            minutes = Math.floor(seconds / 60);
+            seconds = seconds % 60;
+            hours = Math.floor(minutes / 60);
+            minutes = minutes % 60;
+            days = Math.floor(hours / 24);
+            hours = hours % 24;
+            return "" + padNum(days) + " days " + padNum(hours) + ":" + padNum(minutes) + ":" + padNum(seconds);
+        }
+
+        function secondsToDaysHourMinSecXX(remSeconds) {
+            var days, hours, minutes, seconds;
+            seconds = remSeconds;
+            minutes = Math.floor(seconds / 60);
+            seconds = seconds % 60;
+            hours = Math.floor(minutes / 60);
+            minutes = minutes % 60;
+            days = Math.floor(hours / 24);
+            hours = hours % 24;
+            return padNum(days);
+        }
+
+        function secondsToDaysHourMinSecX(remSeconds) {
+            var days, hours, minutes, seconds;
+            seconds = remSeconds;
+            minutes = Math.floor(seconds / 60);
+            seconds = seconds % 60;
+            hours = Math.floor(minutes / 60);
+            minutes = minutes % 60;
+            days = Math.floor(hours / 24);
+            hours = hours % 24;
+            return padNum(hours);
+        }
+
+        // Process auction time tick
+        var jsDefaultProcessAuctionTick = function(aucClosingSecondRef, aucClosingSecond, aucFinalStatus) {
+            if (aucFinalStatus == "Y") {
+                jQuery(aucClosingSecondRef).html("Closed");
+            }
+            else if (aucClosingSecond <= 0) {
+                jQuery(aucClosingSecondRef).html("Closed");
+            }
+            else {
+                jQuery(aucClosingSecondRef).html(secondsToDaysHourMinSec(aucClosingSecond)).attr('data-dayleft', secondsToDaysHourMinSecXX(aucClosingSecond)).attr('data-hourleft', secondsToDaysHourMinSecX(aucClosingSecond));
+            }
+        }
+
+    </script>
+    <style>
+        header .navbar .shop-link.nav-link:after {
+            display: none;
+        }
+
+        .varianttitle_variant,
+        .variantdescription_variant {
+            display: none;
+        }
+
+        body.no-cta .auction-listing .mobile-filters.fixed-top {
+            top: 120px;
+        }
+        @media (max-width: 991px) {
+
+            .item .item-btn-group {
+                display: block;
+            }
+
+        }
+        @media (max-width: 321px) {
+
+            .item {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+
+            .item .item-thumb {
+                height: unset;
+                width: 80%;
+            }
+
+        }
+
+        .owl-carousel .owl-nav button {
+            background-color: #000 !important;
+            height: 30px;
+            width: 30px;
+            line-height: 30px !important;
+            border-radius: 50px !important;
+            text-align: center;
+        }
+
+        .owl-nav button span {
+            position: relative;
+            top: -6px;
+        }
+
+        .owl-dots {
+        display: none;
+        }
+    </style>
+    <body id="productDisplay" class="products no-cta">
+        <nav class="cstmNav">
+            <ul class="myRow mt-2 cstmNavBtnRow" style="justify-content: space-around; list-style: none;">
+                <li><a class="cstmNavBtn" href="index.html">checkout</a></li>
+                <li><a class="cstmNavBtn" href="index2.html">checkout prefilled</a></li>
+            </ul>
+        </nav>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WB4GBRT" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+        <header>
+            <div class="top-head">
+                <div class="container d-flex flex-row-reverse">    
+                    <a href="/iSynApp/venueCheckout!showStep1.action?sid=1103961&pb=ioc1-1241195936165730">
+                        <div class="btn btn-dark btn-sm font-brand shadow-none py-25 px-4">
+                            <span class="fa fa-shopping-cart "></span>
+                            <span class="cart-num">0</span>
+                        </div>
+                    </a>
+                    <a href="/iSynApp/appUserLogin!input.action?sid=1103961"  class="btn btn-brand btn-sm font-brand shadow-none py-25 px-4">Login/Sign Up</a>
+                </div>
+            </div>
+            <nav class="navbar navbar-expand-md py-4">
+                <div class="container">
+                    <a class="navbar-brand" href="/iSynApp/showHomePage.action?sid=1103961"><img width="300" src="https://vafloc01.s3.amazonaws.com/WBStatic/site1103961/dist/img/logo.svg" alt="Real Sports Auction"></a>
+                    <div class="navbar-collapse">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quick Links</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=12&noSiteFilter=N&sort=createts_desc&query=&qMode=open&pgmode1=binitems&qt[0].type=fieldrange&qt[0].name=panname_invavailable_i&qt[0].value1=1&qt[0].value2=100000">View All</a>
+                                    <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=12&noSiteFilter=N&sort=createts_desc&query=&qMode=open&pgmode1=binitems&qt[0].type=fieldrange&qt[0].name=panname_invavailable_i&qt[0].value1=1&qt[0].value2=100000">Hot Items</a>
+                                    <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=12&noSiteFilter=N&sort=createts_desc&query=&qMode=open&pgmode1=binitems&qt[0].type=fieldrange&qt[0].name=panname_invavailable_i&qt[0].value1=1&qt[0].value2=100000">Just Opened</a>
+                                    <a class="dropdown-item" href="/all-teams/closing-soon/isynmv1/alla/list?rc=12&pgmode1=closingsoon&sort=timeleft_asc&availQtyLow=1&availQtyHigh=100">Closing Soon</a>
+                                    <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=12&noSiteFilter=N&sort=createts_desc&query=&qMode=open&pgmode1=binitems&qt[0].type=fieldrange&qt[0].name=panname_invavailable_i&qt[0].value1=1&qt[0].value2=100000">Buy Now Items</a>                            
+                                    <a class="dropdown-item" href="/iSynApp/allAuction.action?rc=12&sid=1103961&pgmode2=recentlysold&sort=timeleft_asc&qMode=closed&availQtyLow=1&availQtyHigh=100">Recently Closed</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+                                <div class="dropdown-menu"> 
+                                    <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=10&selectedCatId=28040&sort=price_asc&pgmode1=catpage&&&availQtyLow=1&availQtyHigh=100">Game Worn Jerseys</a>
+                                    <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=10&selectedCatId=28001&sort=price_asc&pgmode1=catpage&&&availQtyLow=1&availQtyHigh=100">Gloves</a>
+                                    <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=10&selectedCatId=28041&sort=price_asc&pgmode1=catpage&&&availQtyLow=1&availQtyHigh=100">Helmets</a>
+                                    <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=10&selectedCatId=28042&sort=price_asc&pgmode1=catpage&&&availQtyLow=1&availQtyHigh=100">Miscellaneous</a>
+                                    <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=10&selectedCatId=28061&sort=price_asc&pgmode1=catpage&&&availQtyLow=1&availQtyHigh=100">Protective Gear</a>
+                                    <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=10&selectedCatId=28021&sort=price_asc&pgmode1=catpage&&&availQtyLow=1&availQtyHigh=100">Pucks &amp; Accessories</a>
+                                    <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=10&selectedCatId=28022&sort=price_asc&pgmode1=catpage&&&availQtyLow=1&availQtyHigh=100">Signed Memorabilia</a>
+                                    <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=10&selectedCatId=28062&sort=price_asc&pgmode1=catpage&&&availQtyLow=1&availQtyHigh=100">Skates</a>
+                                    <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=10&selectedCatId=28004&sort=price_asc&pgmode1=catpage&&&availQtyLow=1&availQtyHigh=100">Sticks</a>
+                                    <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=10&selectedCatId=28043&sort=price_asc&pgmode1=catpage&&&availQtyLow=1&availQtyHigh=100">Training Gear</a>
+                                    <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=10&selectedCatId=28044&sort=price_asc&pgmode1=catpage&&&availQtyLow=1&availQtyHigh=100">Various Jerseys</a>
+                                    <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=10&selectedCatId=28023&sort=price_asc&pgmode1=catpage&&&availQtyLow=1&availQtyHigh=100">Warm Up Gear</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown nav-teams">
+                                <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Teams</a>
+                                <div class="dropdown-menu mega-menu">
+                                    <div class="container mega-menu-container">
+                                        <div class="row">
+                                            <div class="col text-center">
+                                                <a href="/iSynApp/allProduct.action?sid=1103961&qt[0].type=fieldmatch&qt[0].name=panname_teamname_s&qt[0].value1=leafs&pgmode1=teamname&pgmode2=leafs&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc" class="team-mega-logo" data-team-type="auction">
+                                                    <img class="img-fluid" src="https://vafloc02.s3.amazonaws.com/isyn/images/f400/img-3359400-f.jpg" alt="leafs">
+                                                    <span>Toronto Maple Leafs</span>
+                                                </a>
+                                            </div>
+                                            <div class="col text-center">
+                                                <a href="/iSynApp/allProduct.action?sid=1103961&qt[0].type=fieldmatch&qt[0].name=panname_teamname_s&qt[0].value1=raptors&pgmode1=teamname&pgmode2=raptors&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc" class="team-mega-logo" data-team-type="auction">
+                                                    <img class="img-fluid" src="https://vafloc02.s3.amazonaws.com/isyn/images/f364/img-3359364-f.jpg" alt="raptors">
+                                                    <span>Toronto Raptors</span>
+                                                </a>
+                                            </div>
+                                            <div class="col text-center">
+                                                <a href="/iSynApp/allProduct.action?sid=1103961&qt[0].type=fieldmatch&qt[0].name=panname_teamname_s&qt[0].value1=argos&pgmode1=teamname&pgmode2=argos&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc" class="team-mega-logo" data-team-type="auction">
+                                                    <img class="img-fluid" src="https://vafloc02.s3.amazonaws.com/isyn/images/f420/img-3359420-f.jpg" alt="argos">
+                                                    <span>Toronto Argos</span>
+                                                </a>
+                                            </div>
+                                            <div class="col text-center">
+                                                <a href="/iSynApp/allProduct.action?sid=1103961&qt[0].type=fieldmatch&qt[0].name=panname_teamname_s&qt[0].value1=marlies&pgmode1=teamname&pgmode2=marlies&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc" class="team-mega-logo" data-team-type="auction">
+                                                    <img class="img-fluid" src="https://vafloc02.s3.amazonaws.com/isyn/images/f421/img-3359421-f.jpg" alt="marlies">
+                                                    <span>Toronto Marlies</span>
+                                                </a>
+                                            </div>
+                                            <div class="col text-center">
+                                                <a href="/iSynApp/allProduct.action?sid=1103961&qt[0].type=fieldmatch&qt[0].name=panname_teamname_s&qt[0].value1=tfc&pgmode1=teamname&pgmode2=tfc&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc" class="team-mega-logo" data-team-type="auction">
+                                                    <img class="img-fluid" src="https://vafloc02.s3.amazonaws.com/isyn/images/f365/img-3359365-f.jpg" alt="tfc">
+                                                    <span>Toronto FC</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Leagues / Music</a>
+                                <div class="dropdown-menu">
+                                    <div class="container">
+                                        <div class="row">
+                                            <a href="/iSynApp/allProduct.action?sid=1103961&qt[0].type=fieldmatch&qt[0].name=caf_otherteams_s&qt[0].value1=nba&pgmode1=teamname&pgmode2=nba&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc" class="dropdown-item">nba</a>
+                                            <a href="/iSynApp/allProduct.action?sid=1103961&qt[0].type=fieldmatch&qt[0].name=caf_otherteams_s&qt[0].value1=miscellaneous&pgmode1=teamname&pgmode2=miscellaneous&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc" class="dropdown-item">miscellaneous</a>
+                                            <a href="/iSynApp/allProduct.action?sid=1103961&qt[0].type=fieldmatch&qt[0].name=caf_otherteams_s&qt[0].value1=mlb&pgmode1=teamname&pgmode2=mlb&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc" class="dropdown-item">mlb</a>
+                                            <a href="/iSynApp/allProduct.action?sid=1103961&qt[0].type=fieldmatch&qt[0].name=caf_otherteams_s&qt[0].value1=nfl&pgmode1=teamname&pgmode2=nfl&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc" class="dropdown-item">nfl</a>
+                                            <a href="/iSynApp/allProduct.action?sid=1103961&qt[0].type=fieldmatch&qt[0].name=caf_otherteams_s&qt[0].value1=soccer&pgmode1=teamname&pgmode2=soccer&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc" class="dropdown-item">soccer</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <form id="search_form" action="/iSynApp/allAuction.action" class="form-inline">
+                            <input type="hidden" name="sid" value="1103961" />
+                            <input type="hidden" name="noSiteFilter" value="Y" />
+                            <input type="hidden" name="selectedCatId" value="27883" />
+                            <input type="hidden" name="rc" value="10" />
+                            <input type="hidden" name="sort" value="timeleft_asc" />
+                            <input type="hidden" name="queryfield" value="query" />
+                            <input type="hidden" name="pgmode1" value="search" />
+
+                            <button id="burger" type="button" class="btn shadow-none"><i class="fa fa-bars"></i></button>
+                            <input class="form-control shadow-none" id="search_query" name="query" type="text" placeholder="Search" aria-label="Search">
+                            <button id="search_field_trigger" class="btn shadow-none" type="button"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </nav> 
+            <div id="mobile_menu">
+                <div class="row">
+                    <div class="col-9">
+                        <a href="/iSynApp/appUserLogin!input.action?sid=1103961"  class="btn btn-brand btn-sm btn-block text-center font-brand shadow-none py-25 px-4">Login/Sign Up</a>
+                    </div>
+                    <div class="col-3">
+                        <a href="/iSynApp/venueCheckout!showStep1.action?sid=1103961&pb=ioc1-1241195936169469">
+                            <div class="btn shadow-none py-auto px-0">
+                                <span class="fa fa-shopping-cart "></span>
+                                <span class="cart-num">0</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <hr>
+                <form action="/iSynApp/allAuction.action" class="form-inline">
+                <input type="hidden" name="sid" value="1103961" />
+                <input type="hidden" name="noSiteFilter" value="Y" />
+                <input type="hidden" name="selectedCatId" value="27883" />
+                <input type="hidden" name="rc" value="10" />
+                <input type="hidden" name="sort" value="timeleft_asc" />
+                <input type="hidden" name="queryfield" value="query" />
+                <input type="hidden" name="pgmode1" value="search" />
+                <input class="form-control shadow-none" id="search_query" name="query" type="text" placeholder="Search" aria-label="Search">
+                </form>
+                <hr>
+                <div class="accordion my-4" id="mobile_collapse">
+                    <a href="#" class="btn shadow-none p-0 btn-link" data-toggle="collapse" data-target="#collapse_links">Quick Links</a>
+                    <div id="collapse_links" class="collapse" aria-labelledby="headingOne" data-parent="#mobile_collapse">
+
+                        <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=12&noSiteFilter=N&sort=createts_desc&query=&qMode=open&pgmode1=binitems&qt[0].type=fieldrange&qt[0].name=panname_invavailable_i&qt[0].value1=1&qt[0].value2=100000">View All</a>
+                        <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=12&noSiteFilter=N&sort=createts_desc&query=&qMode=open&pgmode1=binitems&qt[0].type=fieldrange&qt[0].name=panname_invavailable_i&qt[0].value1=1&qt[0].value2=100000">Hot Items</a>
+                        <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=12&noSiteFilter=N&sort=createts_desc&query=&qMode=open&pgmode1=binitems&qt[0].type=fieldrange&qt[0].name=panname_invavailable_i&qt[0].value1=1&qt[0].value2=100000">Just Opened</a>
+                        <a class="dropdown-item" href="/all-teams/closing-soon/isynmv1/alla/list?rc=12&pgmode1=closingsoon&sort=timeleft_asc&availQtyLow=1&availQtyHigh=100">Closing Soon</a>
+                        <a class="dropdown-item" href="/iSynApp/allProduct.action?sid=1103961&rc=12&noSiteFilter=N&sort=createts_desc&query=&qMode=open&pgmode1=binitems&qt[0].type=fieldrange&qt[0].name=panname_invavailable_i&qt[0].value1=1&qt[0].value2=100000">Buy Now Items</a>                            
+                        <a class="dropdown-item" href="/iSynApp/allAuction.action?rc=12&sid=1103961&pgmode2=recentlysold&sort=timeleft_asc&qMode=closed&availQtyLow=1&availQtyHigh=100">Recently Closed</a>
+
+                    </div>
+
+                    <a href="#" class="btn shadow-none p-0 btn-link" data-toggle="collapse" data-target="#collapse_categories">Categories</a>
+                    <div id="collapse_categories" class="collapse" aria-labelledby="headingOne" data-parent="#mobile_collapse">
+                        <a class="dropdown-item" href="/iSynApp/allAuction.action?sid=1103961&selectedCatId=28040&pgmode1=catpage&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc">Game Worn Jerseys</a>
+                        <a class="dropdown-item" href="/iSynApp/allAuction.action?sid=1103961&selectedCatId=28001&pgmode1=catpage&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc">Gloves</a>
+                        <a class="dropdown-item" href="/iSynApp/allAuction.action?sid=1103961&selectedCatId=28041&pgmode1=catpage&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc">Helmets</a>
+                        <a class="dropdown-item" href="/iSynApp/allAuction.action?sid=1103961&selectedCatId=28042&pgmode1=catpage&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc">Miscellaneous</a>
+                        <a class="dropdown-item" href="/iSynApp/allAuction.action?sid=1103961&selectedCatId=28061&pgmode1=catpage&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc">Protective Gear</a>
+                        <a class="dropdown-item" href="/iSynApp/allAuction.action?sid=1103961&selectedCatId=28021&pgmode1=catpage&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc">Pucks &amp; Accessories</a>
+                        <a class="dropdown-item" href="/iSynApp/allAuction.action?sid=1103961&selectedCatId=28022&pgmode1=catpage&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc">Signed Memorabilia</a>
+                        <a class="dropdown-item" href="/iSynApp/allAuction.action?sid=1103961&selectedCatId=28062&pgmode1=catpage&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc">Skates</a>
+                        <a class="dropdown-item" href="/iSynApp/allAuction.action?sid=1103961&selectedCatId=28004&pgmode1=catpage&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc">Sticks</a>
+                        <a class="dropdown-item" href="/iSynApp/allAuction.action?sid=1103961&selectedCatId=28043&pgmode1=catpage&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc">Training Gear</a>
+                        <a class="dropdown-item" href="/iSynApp/allAuction.action?sid=1103961&selectedCatId=28044&pgmode1=catpage&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc">Various Jerseys</a>
+                        <a class="dropdown-item" href="/iSynApp/allAuction.action?sid=1103961&selectedCatId=28023&pgmode1=catpage&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc">Warm Up Gear</a>                     
+                    </div>
+
+                    <a href="#" class="btn shadow-none p-0 btn-link" data-toggle="collapse" data-target="#collapse_teams">Teams</a>
+                    <div id="collapse_teams" class="collapse" aria-labelledby="headingOne" data-parent="#mobile_collapse"> 
+                        <a href="/iSynApp/allProduct.action?sid=1103961&qt[0].type=fieldmatch&qt[0].name=caf_otherteams_s&qt[0].value1=nba&pgmode1=teamname&pgmode2=nba&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc" class="dropdown-item" data-team-type="product"></a>
+                        <a href="/iSynApp/allProduct.action?sid=1103961&qt[0].type=fieldmatch&qt[0].name=caf_otherteams_s&qt[0].value1=miscellaneous&pgmode1=teamname&pgmode2=miscellaneous&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc" class="dropdown-item" data-team-type="product"></a>
+                        <a href="/iSynApp/allProduct.action?sid=1103961&qt[0].type=fieldmatch&qt[0].name=caf_otherteams_s&qt[0].value1=mlb&pgmode1=teamname&pgmode2=mlb&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc" class="dropdown-item" data-team-type="product"></a>
+                        <a href="/iSynApp/allProduct.action?sid=1103961&qt[0].type=fieldmatch&qt[0].name=caf_otherteams_s&qt[0].value1=nfl&pgmode1=teamname&pgmode2=nfl&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc" class="dropdown-item" data-team-type="product"></a>
+                        <a href="/iSynApp/allProduct.action?sid=1103961&qt[0].type=fieldmatch&qt[0].name=caf_otherteams_s&qt[0].value1=soccer&pgmode1=teamname&pgmode2=soccer&availQtyLow=1&availQtyHigh=100&sort=timeleft_asc" class="dropdown-item" data-team-type="product"></a>
+                    </div>
+                    <a href="#" class="btn shadow-none p-0 btn-link" data-toggle="collapse" data-target="#collapse_leagues_music">Leagues / Music</a>
+                    <div id="collapse_leagues_music" class="collapse" aria-labelledby="headingOne" data-parent="#mobile_collapse">                  
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div id="wrap">
+            <section id="single_item" class="my-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="content">
+                                <div class="navVisaLogo">
+                                    <h4  class="pages_container username_title col-md-8" style="margin-top: 0;">CHECKOUT</h4>
+                                </div>
+                                <div class="myRow mt-2 justify-content-spceBtwn">
+                                    <div class="shoppingInfo">
+                                        <div class="card">
+                                            <div class="myRow justify-content-end">
+                                                <span class="standMedButton"><a href="#">Edit Address</a></span>
+                                            </div>
+
+                                            <h2 class="auction_sub_title">Shipping Address:</h2>
+                                            
+                                            <div>
+                                                <p>User Name</p>
+   
+                                                <p>user@gmail.com</p>
+                                                <p>1840 cardinal lane <br>
+                                                    Mattoon, IL<br>
+                                                    USA, 61938</p>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <!-- <div class="disabled" id="shippingMethod"></div> -->
+                                            <h2 class="auction_sub_title">Shipping Method:</h2>
+                                            <div class="col-12">
+                                                <label hidden for="method">Shipping Method:</label>
+                                                <select id="method" class="shipping-field form-control shadow-none error" tabindex="8" required="true" onchange="handleinput('shippingMeth',id, value)">
+                                                    <option>Select</option>
+                                                    <option value="Standard">Standard</option>
+                                                    <option value="Express">Express</option>
+                                                    <option value="PickUp">Pick up</option>
+                                                </select  >
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="myRow justify-content-end">
+                                                <span class="standMedButton"><a href="#">Edit Address</a></span>
+                                            </div>
+                                            <h2 class="auction_sub_title">Billing Address:</h2>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked disabled onchange="showBilling(flexCheckChecked)">
+                                                <label class="form-check-label" for="flexCheckChecked">
+                                                  Same as shipping
+                                                </label>
+                                              </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="myRow justify-content-end">
+                                                <span class="standMedButton"><a href="#">Edit Payment Method</a></span>
+                                            </div>
+                                            <form action="">
+                                                <div  class="formRows myRow justify-content-spceBtwn">
+                                                    <div class="col-12">
+                                                        <label for="selectPayment">Choose Payment Option</label>
+                                                        <select id="selectPayment" class="shipping-field form-control shadow-none error" tabindex="8" required="" value="Visa">
+                                                            <option value="Visa"><img class="visaLogoSm" src="./Visa_Brandmark_Blue_RGB.png" alt=""> 
+                                                                 Visa</option>
+                                                            <option value="Paypal">Paypal</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="formRows">
+                                                    <label for="cardNumber">Card Type</label>
+                                                    <div class="myRow justify-content-spceBtwn">
+                                                        <div class="col-6">
+                                                            <div class="cstmSelect selected" id="visa">
+                                                                <div style="display: inline-block;" id="visaCheck">
+                                                                    <i class="fas fa-check"></i>
+                                                                </div>
+                                                                <img class="visaLogoSm" src="./Visa_Brandmark_Blue_RGB.png" alt=""> 
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="cstmSelect" id="payPal">
+                                                                <div style="display: inline-block;" id="payPalCheck">
+                                                                </div>
+                                                                Pay pal
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div> -->
+                                                <div class="formRows myRow justify-content-spceBtwn">
+                                                    <div class="col-12">
+                                                        <label for="cardNumber">Card Number</label>
+                                                        <p class="form-control">**********</p>
+                                                        <!-- <input type="number" class="form-control" aria-label="Card Number" id="cardNumber"> -->
+                                                    </div>
+                                                </div>
+                                                <div class="formRows myRow justify-content-spceBtwn">
+                                                    <div class="col-12">
+                                                        <label for="cvvNumber">CVV Number</label>
+                                                        <p class="form-control">***</p>
+                                                        <!-- <input type="number" class="form-control" aria-label="CVV Number" id="cvvNumber"> -->
+                                                    </div>
+                                                </div>
+                                                <div class="formRows myRow justify-content-spceBtwn">
+                                                    <div class="col-12">
+                                                        <label for="month">Exp. Month / Year</label>
+                                                        <p class="form-control">20/26</p>
+                                                        <!-- <input type="month"class="form-control"  id="start" name="start"min="2022-06" value="2022-06" id="month"> -->
+                                                    </div>
+         
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="cart-container">
+                                        <div class="cart-box">
+                                            <div class="card">
+                                                <div class="d-flex justify-content-spceBtwn">
+                                                    <h2 class="auction_sub_title">Your Cart:</h2>
+                                                    <span class="standMedButton"><a href="#">Edit Cart</a></span>
+                                                </div>
+                                                <div class="cart-items">
+                                                    <div class="item">
+                                                        <div class="image-container">
+                                                            <img class="item-image" src="https://vafloc02.s3.amazonaws.com/isyn/images/f599/img-3678599-m.png" alt="helmet image">
+                                                            <div class="itemQty">1</div>
+                                                        </div>
+                                                        <div class="item-detail">
+                                                             <h4>PRO STOCK CCM Tacks 710 White Toronto Maple Leafs NHL Team Issued Hockey Helmets
+                                                            </h4>
+                                                            <p>PRICE: $149.99</p>
+                                                        </div>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="image-container">
+                                                            <img class="item-image" src="https://vafloc02.s3.amazonaws.com/isyn/images/f837/img-3697837-m.png"  alt="jersey">
+                                                            <div class="itemQty">1</div>
+                                                        </div>
+                                                        <div class="item-detail">
+                                                             <h4>Toronto Argonauts Adidas 2016-2018 Blue Player Worn Practice Jerseys</h4>
+                                                            <p>PRICE: $150.00</p>
+                                                        </div>
+                                                        </h4>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="item">
+                                                        <h4>Shipping: </h4>
+                                                        <p>$50.00</p>
+                                                    </div>
+                                                    <div class="item">
+                                                        <h4>Taxes: </h4>
+                                                        <p>$50.00</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="total-price d-flex justify-content-spceBtwn">
+                                                <p>Sub Total</p>
+                                                <p>$399.99</p>
+                                            </div>
+
+                                            <button class="submitBtn">
+                                                place order
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="modal fadeInUp" id="pop-reserve" tabindex="-1" role="dialog" aria-labelledby="pop-reserve-title" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="pop-reserve-title">What is a Reserve Price auction?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>In a Reserve Price Auction, the seller has set a Reserve Price, which is a price below which the listing will not sell. The Reserve Price is higher than the Opening Value. A reserve price allows the seller to start the auction with an opening value below the reserve price to initiate bidder interest and determine the fair market value of an item. If the seller as set a Reserve Price you will see either a &#34;Reserve Price NOT Met&#34; or &#34;Reserve Price Met&#34; message on the listing page depending on whether the current bid is below, or at or above, the reserve.</p>
+                            <p>Reserve Price NOT Met- The current amount of the highest bid is below the reserve price and the item will not sell at auction close.</p>
+                            <p>Reserve Price Met - The current amount of the highest bid is equal to, or greater than, the reserve price and the item will be sold.</p>
+                            <p>If the highest bid at the auction close does not meet the seller's Reserve Price, the seller is not required to sell the item unless the seller chooses to do so. In this case, the seller will have a period of 48 hours after the auction close in which to contact the highest bidder whose offer was below the reserve price. Bidders who are contacted under these circumstances, however, are under no obligation to purchase the item.</p>
+                            <h1>Why does a seller use a Reserve Price?</h1>
+                            <p>In a Reserve Price auction, the seller starts the auction at a value below the lowest price at which s/he is willing to sell (the Reserve Price) to capture the bidder interest. This way, the bidders are not forced to bid at fair market value from the start of the auction. Also, many sellers prefer Reserve Price auctions when they are not sure of the market value of an item, and want to find an audience by enticing multiple bidders' interest.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fadeInUp" id="pop-auction" tabindex="-1" role="dialog" aria-labelledby="pop-auction-title" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="pop-auction-title">What is an Open auction?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>In a Reserve Price Auction, the seller has set a Reserve Price, which is a price below which the listing will not sell. The Reserve Price is higher than the Opening Value. A reserve price allows the seller to start the auction with an opening value below the reserve price to initiate bidder interest and determine the fair market value of an item. If the seller as set a Reserve Price you will see either a &#34;Reserve Price NOT Met&#34; or &#34;Reserve Price Met&#34; message on the listing page depending on whether the current bid is below, or at or above, the reserve.</p>
+                            <p>Reserve Price NOT Met- The current amount of the highest bid is below the reserve price and the item will not sell at auction close.</p>
+                            <p>Reserve Price Met - The current amount of the highest bid is equal to, or greater than, the reserve price and the item will be sold.</p>
+                            <p>If the highest bid at the auction close does not meet the seller's Reserve Price, the seller is not required to sell the item unless the seller chooses to do so. In this case, the seller will have a period of 48 hours after the auction close in which to contact the highest bidder whose offer was below the reserve price. Bidders who are contacted under these circumstances, however, are under no obligation to purchase the item.</p>
+                            <h1>Why does a seller use a Reserve Price?</h1>
+                            <p>In a Reserve Price auction, the seller starts the auction at a value below the lowest price at which s/he is willing to sell (the Reserve Price) to capture the bidder interest. This way, the bidders are not forced to bid at fair market value from the start of the auction. Also, many sellers prefer Reserve Price auctions when they are not sure of the market value of an item, and want to find an audience by enticing multiple bidders' interest.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fadeInUp" id="pop-dutch" tabindex="-1" role="dialog" aria-labelledby="pop-dutch-title" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="pop-dutch-title">What is a Dutch Auction?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>A Dutch Auction occurs automatically on Real Sports Auction when a seller has multiple, identical items offered for sale. The seller specifies the minimum price (the Opening Value) and the number of items for sale. Bidders can then bid at or above the minimum price for the quantity of items they which to purchase. At the close of the auction, all winning bidders purchase the items at the same price, which is the lowest successful Bid.</p>
+                            <h5>How are winning bids determined in multi-item listings?</h5>
+                            <p>In some auctions, a number of identical items are offered for sale at the same time. When the listing closes, the highest Bidders win the available inventory. Bids are sorted in order with priority given to price, the quantity bid for, and then finally to time a bid was placed. The time of a bid is determined by Real Sports Auction based on its records. If bids are tied for price, the Buyer who has bid in the greater quantity wins. If there are two bids at the same price for the same quantity, the early bid wins.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fadeInUp" id="pop-buynow" tabindex="-1" role="dialog" aria-labelledby="pop-buynow-title" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="pop-buynow-title">What is a Fixed Price auction?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Fixed Price Sale listings or &#34;Buy it Now&#34; auctions have a fixed price set by the seller. Buyers simply choose to buy the item at that price. Fixed Price listings will remain active until all items have been sold or the close date and time set by the seller has been reached.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fadeInUp" id="bid_info" tabindex="-1" role="dialog" aria-labelledby="bid_info-title" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="bid_info-title">What is a maximum bid?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>This system offers a convenient bidding system option, so you don't have to continuously login to re-bid. When you place a maximum bid, you are entering the highest price you are willing to pay for an item. Your maximum bid is kept confidential until it is exceeded by another bidder.</p>
+                            <p>When a maximum bid is placed, the system will place bids on your behalf at the bid increment amount above the current high bid. The system will bid by the increment to ensure you remain the highest bidder or to meet the reserve price (if applicable), up to your maximum bid amount.</p>
+                            <p>If and only if duplicate maximum bids are entered, the customer who entered the maximum bid first will get priority and will be the winning bidder.</p>
+                            <p>If another bidder places a higher bid above your maximum bid, you will be emailed to login and place another bid.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fadeInUp" id="bid_single_info" tabindex="-1" role="dialog" aria-labelledby="bid_info-title" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="bid_info-title">What is a single bid?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>A single bid is a one-time amount, that represents the price you are committing to bid. The price that is entered as a single bid can be any amount that is equal to, or greater than the current amount plus the minimum increment.</p>
+                            <p>This amount will become the new current bid amount of the item (i.e. the item is $100. A single bid is placed at $200. The item price is now $200).</p>
+                            <p>If there is a maximum bid on the item, the greater of the single bid and maximum bid will be the highest bid amount.</p>
+                            <p>If a single bid and a maximum bid are placed at the same value, the bid that is placed earlier will become the winning bid.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fadeInUp" id="auto-extend" tabindex="-1" role="dialog" aria-labelledby="auto-extend-title" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="auto-extend-title">What is Auto Bid Extend?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>The Auto Bid Extend feature ensures that bidders will always have a chance to challenge bids placed in the final seconds of an auction. When indicated on a listing page, if a bid is placed during the last 5 minutes of an auction, the auction will automatically extend for an additional 5 minutes from the time of the latest bid. The auction will close once all bidding activity has stopped for a period of 5 minutes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fadeInUp" id="text-bidding-info" tabindex="-1" role="dialog" aria-labelledby="text-bidding-info-title" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="text-bidding-info-title">About Bid by SMS</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Now it’s even easier to bid on Real Sports Auctions. When you see an auction labeled for SMS Bidding, just send the SMS Reference ID and your bid amount to the number given, separated by a semicolon(;).</p>
+                            <p>For instance, to bid $0.00 on this auction, text <b>$mobrefID;$auction.nextBid</b> to <b> 1-647-695-4098</b></p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="/iSynApp/showPage.action?sid=1103961&pageName=expressBidHowto" class="btn btn-primary">Learn More</a>
+                            <a class="btn btn-primary" href="$setupUrl">$setupText</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fadeInUp" id="email-friend" tabindex="-1" role="dialog" aria-labelledby="email-friend-title" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="email-friend-title">Email a Friend</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/iSynApp/manageUserEmail!executeSendEmailToFriends.action" method="post">
+                                <input class="iSynRetUrl" type="hidden" name="iSynRetUrl" value="/iSynApp/auctionDisplay.action?sid=1103961&auctionId=${auction.id}" />
+                                <input id="msgType" type="hidden" name="msgType" value="" />
+                                <input type="hidden" name="sid" value="1103961" />
+                                <fieldset>
+                                    <div class="form-group">
+                                        <label for="send_firstname">Your First Name</label>
+                                        <input id="send_firstname" class="form-control text-input control-brand shadow-none" type="text" name="pgcust4" value="">
+                                    </div>
+                                                                                    <div class="form-group">
+                                        <label for="send_lastname">Your Last Name</label>
+                                        <input id="send_lastname" class="form-control text-input control-brand shadow-none" type="text" name="pgcust5" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="social_email">Recipient Email</label>
+                                        <input id="social_email" class="form-control text-input control-brand shadow-none" type="text" name="addressList" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sendMessage">Message</label>
+                                        <textarea id="sendMessage" class="form-control control-brand shadow-none" name="sendMessage">Check out this great Real Sports auction: https://auctions.realsports.ca/iSynApp/auctionDisplay.action?sid=1103961&auctionId=${auction.id}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-brand px-4 btn-brand-dark shadow-none" name="submit" type="submit" value="Submit">Send</button>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fadeInUp" id="bid-history" tabindex="-1" role="dialog" aria-labelledby="bid-history-title" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="bid-history-title">Bid History</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>No bids yet on this item.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <div class="top-footer">
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-6 col-xs-12 col-lg-2 mr-auto">
+                                <h4>Newsletter</h4>
+                                <p class="mb-3">Join our newsletter list for the latest offers, styles and sales.</p>
+                                <a href="https://shop.realsports.ca/pages/join-the-list" target="_blank" class="btn px-4 btn-brand bg-light text-dark shadow-none">Sign Up <i class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                            <div class="col-6 col-xs-12">
+                                <div class="row">
+                                    <div class="col">
+                                        <h4>Customer Service</h4>
+                                        <ul class="list-unstyled">
+                                            <li>			<a href="/iSynApp/appAccount.action?sid=1103961"  class="">Account</a>
+        </li>
+                                            <li>			<a href="/iSynApp/showPage.action?sid=1103961&pageName=faq"  class="">FAQ</a>
+        </li>
+                                            <li>			<a href="/iSynApp/manageUserEmail!showEmailContactUsForm.action?sid=1103961"  class="">Contact Us</a>
+        </li>
+                                            <li><a href="https://t.maze.design/28332635" target="_blank">Feedback</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col">
+                                        <h4>Information</h4>
+                                        <ul class="list-inline">
+                                            <li><a href="https://www.mlse.com/legal/privacy-policy" target="_blank">Privacy Policy</a></li>
+                                            <li>			<a href="/iSynApp/showPage.action?sid=1103961&pageName=terms"  class="">Terms &amp; Conditions</a>
+        </li>
+                                            <li>			<a href="/iSynApp/showPage.action?sid=1103961&pageName=sitemap"  class="">Site Map</a>
+        </li>
+                                            <li>			<a href="/iSynApp/showPage.action?sid=1103961&pageName=shipping"  class="">Shipping</a>
+        </li>
+                                            <li><a href="https://t.maze.design/28332635" target="_blank">Help us improve our site</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <hr class="d-lg-none d-xl-none">
+                                <ul class="list-inline social-links">
+                                    <li class="list-inline-item"><a href="https://www.instagram.com/realsportsapparel" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                                    <li class="list-inline-item"><a href="https://www.twitter.com/ShopRSApparel" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                    <li class="list-inline-item"><a href="https://www.facebook.com/RealSportsApparel/" target="_blank"><i class="fa fa-facebook"></i></a></li> 
+                                </ul>
+                                <p>We&apos;re sports fans who love to watch the game as much as you. We feel bursts of pride when the good guys win and we rally in times of defeat. We cheer at the top of our lungs and we support our teams wholeheartedly.</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-foot">
+                    <div class="container">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small>&copy; 2021 RealSports Auctions. All Rights Reserved.</small>
+                            <a href="http://www.commercedynamics.com/?utm_source=&utm_medium=Footer%20logo&utm_campaign=real_sports_auction" target="_blank">
+                                <div class="power_container">
+                                    <div class="float_block">
+                                    <div class="cd_logo"><img src="https://vafloc01.s3.amazonaws.com/WBStatic/site1103961/dist/img/logo-cd.png" alt="commerce dynamics marketplace" height="42" /></div>
+                                    </div>
+                                    <div class="float_block">
+                                    <div class="powered_by">POWERED BY</div>
+                                    <div class="commerce_text">COMMERCE</div>
+                                    <div class="dynamics_text">DYNAMICS</div>
+                                    <div class="marketplaces">AUCTION MARKETPLACE</div>
+                                    </div>
+                                </div>
+                            </a>                
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <div class="MuiSnackbar-root MuiSnackbar-anchorOriginBottomLeft d-none" id="tellUs-popup">
+            <div class="MuiPaper-root MuiSnackbarContent-root jss9 MuiPaper-elevation6" role="alert" aria-describedby="message-id">
+                <div>
+                    <span class="d-block text-dark"><b>Help us improve this site</b><span role="img" aria-label="emoji">&nbsp;&nbsp; 💬 📈</span></span><br><a class="tellUs-close" target="$_blank" href="https://t.maze.design/28332635"><button class="btn btn-brand">TELL US WHAT YOU THINK</button></a>
+                </div>
+                <div>
+                    <span class="fa fa-times ml-4 tellUs-close"></span>
+                </div>
+            </div>
+        </div>	
+        <script src="https://vafloc01.s3.amazonaws.com/WBStatic/site1103961/dist/js/libs-min.js?v=15"></script>
+        <script src="https://vafloc01.s3.amazonaws.com/WBStatic/site1103961/dist/js/main-min.js?v=15"></script>
+
+        <script src="https://vafloc01.s3.amazonaws.com/WBStatic/site1103961/dist/js/height.min.js"></script>
+        <script src="https://vafloc01.s3.amazonaws.com/WBStatic/site1103961/dist/js/owl.min.js"></script>
+        <script src="https://vafloc01.s3.amazonaws.com/WBStatic/site1103961/dist/js/owl.thumbs.min.js"></script>
+        <script src="https://vafloc01.s3.amazonaws.com/WBStatic/site1103961/dist/js/realsports.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
+        <div class="modal fadeInUp" id="livebid-note" tabindex="-1" role="dialog" aria-labelledby="livebid-note-title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="livebid-note-title">Real Time Bid Refresh is no longer active on the site</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>Click "Reactivate" below to enable Real Time Bid Refresh and see the most recent bidding activity. Please visit the <a href="/iSynApp/showPage.action?sid=1103961&pageName=faq" class="text-dark"><u>FAQ page</u></a> to learn more about Real Time Bid Refresh.</p>
+                        <button class="refresh-page btn btn-brand px-4 btn-action shadow-none">Reactivate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" charset="utf-8">
+            jQuery( document ).ready(function($) {
+                jsEnableAuctionUpdates('', 'https://auctions.realsports.ca', 20000, 720, jsDefaultProcessAuctionUpdates, jsDefaultProcessAuctionTick);
+            });
+        </script>
+                    
+        <script>
+            jQuery(document).ready(function($) {
+
+
+            $(document).mouseup(function(e) {
+                var zoom_toggle = $('.cdHoverSwap-zoomToggle'),
+                    zoom_container = $('.cdHoverSwap-zoomContainer'),
+                    container = $('.cdHoverSwap-zoomToggle, .cdHoverSwap-zoomContainer, #preview')
+
+                if(!container.is(e.target) && container.has(e.target).length === 0) {
+                if(zoom_container.hasClass('cdHoverSwap-zoomContainer-isZoomOpen')) {
+                zoom_toggle.click()
+                }
+                }
+
+            })
+
+            })
+        </script>
+        <script src="https://opencanvas.io/mlse-scripts.js"></script>
+        <script src="https://opencanvas.io/search.js"></script>
+        <script src="https://opencanvas.io/dist/mlse/scripts.js"></script>
+
+        <script>
+            let shipping={
+                firstName: '',
+                lastName: '',
+                inputEmail: '',
+                inputEmailConfirm: '',
+                adress: '',
+                city: '',
+                province: '',
+                method: '',
+                billingAdress: '',
+                billingCity: '',
+                billingProvince: '',
+                cardType: 'visa',
+                cardNumber: '',
+                cvvNumber: '',
+                month:''
+            }
+            function selectCardType(type){
+                // console.log(type)
+                if(type === 'visa'){
+                    const visaEl = document.getElementById('visa');
+                    const visaCheck = document.getElementById('visaCheck');
+                    const payPalCheck = document.getElementById('payPalCheck');
+                    const payPalEl = document.getElementById('payPal');
+                    visaEl.className = 'cstmSelect selected';
+                    payPalEl.className = 'cstmSelect';
+                    visaCheck.innerHTML='<i class="fas fa-check"></i>'
+                    payPalCheck.innerHTML=''
+                    shipping={...shipping, cardType: 'visa'}
+
+                }
+                if(type === 'payPal'){
+                    const visaEl = document.getElementById('visa');
+                    const payPalEl = document.getElementById('payPal');
+                    const visaCheck = document.getElementById('visaCheck');
+                    const payPalCheck = document.getElementById('payPalCheck');
+                    visaEl.className = 'cstmSelect';
+                    payPalEl.className = 'cstmSelect selected';
+                    payPalCheck.innerHTML='<i class="fas fa-check"></i>'
+                    visaCheck.innerHTML=''
+                    shipping={...shipping, cardType: 'payPal'}
+                }
+            }
+            function showBilling(id){
+                const paymentDetail = document.getElementById('paymentDetail')
+
+                console.log(id.checked)
+                const billingForm = document.getElementById('billingAddress')
+                if(!id.checked){
+                    billingForm.className =''
+                    paymentDetail.classList.add('disabled')
+                    
+                }else{
+                    billingForm.className ='hidden'
+                    paymentDetail.classList.remove('disabled')
+
+                }
+            }
+
+            function handleinput(type,id, val){
+                // console.log(e)
+                // console.log('somehting?')
+                if(type === 'shippingAdd'){
+                    shipping={...shipping, [id]: val}
+                    // console.log(shipping)
+                    if(shipping.firstName !=='' && 
+                    shipping.lastName !=='' &&
+                    shipping.inputEmail !=='' &&
+                    shipping.inputEmailConfirm !=='' &&
+                    shipping.adress !=='' &&
+                    shipping.city !=='' &&
+                    shipping.province !==''
+                    ){
+                        // console.log('good to go!!')
+                        const shippingMethod = document.getElementById('shippingMethod')
+                        shippingMethod.classList.remove('disabled')
+                    }else{
+                        const shippingMethod = document.getElementById('shippingMethod')
+                        shippingMethod.classList.add('disabled')
+                    }
+                }
+                if(type === 'shippingMeth'){
+                    shipping={...shipping, [id]: val}
+                    if(shipping.method !==''){
+                        const billingAddress1 = document.getElementById('billingAddress1')
+                        billingAddress1.classList.remove('disabled')
+                        const billingChecked = document.getElementById('billingChecked')
+                        
+                        // console.log(billingChecked.checked)
+                        const paymentDetail = document.getElementById('paymentDetail')
+                        if(billingChecked.checked){
+                            paymentDetail.classList.remove('disabled')
+                        }else{
+                            paymentDetail.classList.add('disabled')
+                        }
+                    }
+
+                }
+                if(type === 'billingAdd'){
+                    shipping={...shipping, [id]: val}
+                    const paymentDetail = document.getElementById('paymentDetail')
+                    if(shipping. billingAdress !== '' && 
+                    shipping.billingCity !== '' && 
+                    shipping.billingProvince !== '' 
+                    ){
+                        paymentDetail.classList.remove('disabled')
+                    }else {
+                        paymentDetail.classList.add('disabled')
+                    }
+                }
+                if(type === 'paymentInfo'){
+                    shipping={...shipping, [id]: val}
+                    const submitBtn = document.getElementById('submitBtn')
+                    if(shipping.cardNumber !=='' && 
+                    shipping.cvvNumber !=='' &&
+                    shipping.month !==''
+                    ){
+                        submitBtn.disabled =false
+                        submitBtn.classList.remove('inactive')
+                    }else{
+                        submitBtn.disabled =true
+                        submitBtn.classList.add('inactive')
+                    }
+                //     cardNumber: '',
+                // cvvNumber: '',
+                // month:''
+                }
+            }
+        </script>
+
+    </body>
+</html><!-- iSyn Generated By:i22-40; cache:Not enabled -->
